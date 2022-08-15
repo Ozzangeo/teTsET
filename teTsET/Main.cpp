@@ -28,8 +28,6 @@
 * 자고일어나면 Sprite2D 만들기
 */
 
-// 와새늦
-
 #include "Objects.h"
 
 using namespace std;
