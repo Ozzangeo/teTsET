@@ -44,7 +44,10 @@ int main() {
 #pragma region Scene1
 	Scene NewScene;
 
-	Player* pl = NewScene.AddGameObject<Player>("Player");
+	GameObject* pl = NewScene.AddGameObject<Player>("Player");
+	pl->Pos = { 50, 0 };
+
+	pl = NewScene.AddGameObject<ColliderObj>("TestObject");
 	pl->Pos = { 50, 25 };
 
 	manager->AddScene(&NewScene, "NewScene");

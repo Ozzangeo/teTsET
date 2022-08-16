@@ -25,8 +25,12 @@ namespace CCs {
 	};
 	class PlayerComp : public Component {
 	private:
+		Collider* Col;
 		float PlayerSpeed = 20.0f;
+		bool isCollision;
+
 	public:
+		void Awake();
 		void Update();
 	};
 }

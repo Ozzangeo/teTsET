@@ -39,6 +39,65 @@ void GameObject::Remove() {
 	CompHolder.Clear();
 }
 
+// Scene
+void Scene::Update() {
+	for (GameObject* Temp : Objects) {
+		Temp->Update();
+	}
+}
+void Scene::Clear() {
+	for (GameObject* Temp : Objects) {
+		Temp->Remove();
+		delete Temp;
+	}
+	Objects.clear();
+}
+GameObject* Scene::GetGameObject(string name) {
+	for (GameObject* Item : Objects) {
+		if (Item->name == name) return Item;
+	}
+	return nullptr;
+}
+list<GameObject*> Scene::GetGameObjectList(string tag) {
+	list<GameObject*> Temp;
+
+	for (GameObject* Item : Objects) {
+		if (Item->tag == tag) Temp.push_back(Item);
+	}
+
+	return Temp;
+}
+
+// SceneManager
+SceneManager& SceneManager::GetInstance() {
+	static SceneManager m_SceneManager;
+	return m_SceneManager;
+}
+void SceneManager::AddScene(Scene* Scene_, string Tag) {
+	for (auto& Item : Scenes) {
+		if (Item.Tag == Tag) {
+			Item.Scene_ = Scene_;
+			return;
+		}
+	}
+	Scenes.push_back({ Scene_, Tag });
+}
+void SceneManager::SetScene(string Tag) {
+	for (auto& Item : Scenes) {
+		if (Item.Tag == Tag) UpdateScene = Item.Scene_;
+	}
+}
+void SceneManager::Update() {
+	UpdateScene->Update();
+}
+void SceneManager::Clear() {
+	for (auto& Item : Scenes) {
+		Item.Scene_->Clear();
+		delete Item.Scene_;
+	}
+	Scenes.clear();
+}
+
 // Sprite
 void Sprite::Update() {
 	if (object->isVisible) {
@@ -100,8 +159,7 @@ void Audio::PauseAudio(UINT ID) {
 }
 
 // Collider
-
-//void Collider::Awake()
-//{
-//	Scene_ = SceneManager::GetInstance().UpdateScene;
-//}
+void Collider::Awake()
+{
+	SceneManager_ = &SceneManager::GetInstance();
+}

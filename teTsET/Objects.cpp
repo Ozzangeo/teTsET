@@ -42,19 +42,29 @@ void Sprite2DTest::Awake() {
 	#pragma endregion
 }
 
+// Player
 void Player::Awake()
 {
-	CompHolder.RequireComponent<Sprite2D>()->object = this;
+	CompHolder.RequireComponent<Sprite>()->object = this;
+	CompHolder.RequireComponent<Collider>()->object = this;
 	CompHolder.RequireComponent<PlayerComp>()->object = this;
 
-#pragma region Sprite2D
-	Sprite2D* sprite = CompHolder.GetComponent<Sprite2D>();
-	sprite->sprite = "\
-@@@@ @@@@\
-@@@@ @@@@\
-    @    \
-@@@@ @@@@\
-@@@@ @@@@";
-	sprite->object->Size = { 9, 5 };
+	CompHolder.Awake();
+
+	Sprite* sp = CompHolder.GetComponent<Sprite>();
+	sp->object->Size = { 10, 5 };
+}
+
+// ColliderObj
+void ColliderObj::Awake() {
+	CompHolder.RequireComponent<Sprite>()->object = this;
+	CompHolder.RequireComponent<Collider>()->object = this;
+
+	CompHolder.Awake();
+
+	tag = "Wall";
+#pragma region Sprite
+	Sprite* sprite = CompHolder.GetComponent<Sprite>();
+	sprite->object->Size = { 10, 5 };
 #pragma endregion
 }

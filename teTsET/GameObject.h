@@ -66,6 +66,7 @@ class GameObject
 {
 public:
 	string name;
+	string tag;
 	bool isVisible = true;
 
 	ComponentHolder CompHolder;
@@ -78,16 +79,16 @@ public:
 	virtual void Remove();
 };
 class Scene {
-private:
+public:
 	list<GameObject*> Objects;
 
-public:
-	template<typename T> T* AddGameObject(string name) {
+	template<typename T> T* AddGameObject(string name = "", string tag = "") {
 		// 만약 이미 같은 이름과 타입의 오브젝트가 있다면
 		if (GetGameObject<T>(name) != nullptr) return nullptr;
 
 		GameObject* Temp = new T();
-		Temp->name = name;
+		if(name != "") Temp->name = name;
+		if (tag != "") Temp->tag = tag;
 		Temp->Awake();
 
 		Objects.push_back(Temp);
@@ -99,6 +100,8 @@ public:
 		}
 		return nullptr;
 	}
+	GameObject* GetGameObject(string name);
+	list<GameObject*> GetGameObjectList(string tag);
 	template<typename T> void RemoveGameObject(string name) {
 		GameObject* obj = GetGameObject<T>(name);
 		if (obj == nullptr) return;
@@ -195,24 +198,33 @@ namespace DCs {
 		void RePlayAudio(UINT ID);
 		void PauseAudio(UINT ID);
 	};
-	//class Collider : public Component {
-	//private:
-	//	Scene* Scene_;
+	class Collider : public Component {
+	private:
+		SceneManager* SceneManager_;
 
-	//public:
-	//	void Awake();
-	//	void Update() {};
+	public:
+		void Awake();
+		void Update() {};
 
-	//	template<typename T> bool isCollision(string name) {
-	//		GameObject* object_ = Scene_->GetGameObject<T>(name);
+		bool isCollision(string tag) {
+			list<GameObject*> objects = SceneManager_->UpdateScene->GetGameObjectList(tag);
 
-	//		// Pos - Box * 0.5 < Pos + Box * 0.5
-	//		object->Pos.x - object->Size * 0.5f;
-	//		for (int x = 0; i < 0; I++) {
+			if (object == nullptr) return false;
 
-	//		}
+			// Pos < Pos + Size
+			// <= : 널널한 판정
+			// < : 빡센 판정
+			for (auto Item : objects) {
+				for (int x = (int)object->Pos.x, X = (int)(object->Pos.x + object->Size.x); x < X; x++) {
+				for (int y = (int)object->Pos.y, Y = (int)(object->Pos.y + object->Size.y); y < Y; y++) {
+					for (int x_ = (int)Item->Pos.x, X_ = (int)(Item->Pos.x + Item->Size.x); x_ < X_; x_++) {
+					for (int y_ = (int)Item->Pos.y, Y_ = (int)(Item->Pos.y + Item->Size.y); y_ < Y_; y_++) {
+						if (x == x_ && y == y_) return true;
+					}}
+				}}
+			}
 
-	//		return false;
-	//	}
-	//};
+			return false;
+		}
+	};
 }

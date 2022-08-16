@@ -6,7 +6,6 @@
 
 namespace Objects {
 	class CrossTest : public GameObject {
-	private:
 	public:
 		void Awake();
 	};
@@ -15,13 +14,15 @@ namespace Objects {
 		void Awake();
 	};
 	class Sprite2DTest : public GameObject {
-	private:
 	public:
 		void Awake();
 	};
 
 	class Player : public GameObject {
-	private:
+	public:
+		void Awake();
+	};
+	class ColliderObj : public GameObject {
 	public:
 		void Awake();
 	};

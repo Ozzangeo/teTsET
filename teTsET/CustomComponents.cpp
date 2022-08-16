@@ -4,50 +4,6 @@ using namespace GS;
 using namespace DCs;
 using namespace CCs;
 
-// Scene
-void Scene::Update() {
-	for (GameObject* Temp : Objects) {
-		Temp->Update();
-	}
-}
-void Scene::Clear() {
-	for (GameObject* Temp : Objects) {
-		Temp->Remove();
-		delete Temp;
-	}
-	Objects.clear();
-}
-
-// SceneManager
-SceneManager& SceneManager::GetInstance() {
-	static SceneManager m_SceneManager;
-	return m_SceneManager;
-}
-void SceneManager::AddScene(Scene* Scene_, string Tag) {
-	for (auto& Item : Scenes) {
-		if (Item.Tag == Tag) {
-			Item.Scene_ = Scene_;
-			return;
-		}
-	}
-	Scenes.push_back({ Scene_, Tag });
-}
-void SceneManager::SetScene(string Tag) {
-	for (auto& Item : Scenes) {
-		if (Item.Tag == Tag) UpdateScene = Item.Scene_;
-	}
-}
-void SceneManager::Update() {
-	UpdateScene->Update();
-}
-void SceneManager::Clear() {
-	for (auto& Item : Scenes) {
-		Item.Scene_->Clear();
-		delete Item.Scene_;
-	}
-	Scenes.clear();
-}
-
 // CrossTestComp
 void CrossTestComp::Update() {
 	static bool isVis = true;
@@ -92,18 +48,29 @@ void AudioTestComp::Update() {
 }
 
 // PlayerComp
+void PlayerComp::Awake() {
+	Col = object->CompHolder.RequireComponent<Collider>();
+}
 void PlayerComp::Update()
 {
+	isCollision = Col->isCollision("Wall");
+
 	if (keyboard->GetKey(KC_W)) {
-		object->Pos.y -= PlayerSpeed * graphic->deltatime;
+		if (isCollision) object->Pos.y += PlayerSpeed * graphic->deltatime;
+		else object->Pos.y -= PlayerSpeed * graphic->deltatime;
 	}
 	if (keyboard->GetKey(KC_A)) {
-		object->Pos.x -= PlayerSpeed * graphic->deltatime * 2;
+		if (isCollision) object->Pos.x += PlayerSpeed * graphic->deltatime * 2;
+		else object->Pos.x -= PlayerSpeed * graphic->deltatime * 2;
 	}
 	if (keyboard->GetKey(KC_S)) {
-		object->Pos.y += PlayerSpeed * graphic->deltatime;
+		if (isCollision) object->Pos.y -= PlayerSpeed * graphic->deltatime;
+		else object->Pos.y += PlayerSpeed * graphic->deltatime;
 	}
 	if (keyboard->GetKey(KC_D)) {
-		object->Pos.x += PlayerSpeed * graphic->deltatime * 2;
+		if (isCollision) object->Pos.x -= PlayerSpeed * graphic->deltatime * 2;
+		else object->Pos.x += PlayerSpeed * graphic->deltatime * 2;
 	}
+
+	graphic->Text("[ isCollision : " + to_string(isCollision) + " ] ", {1, 9}, true);
 }
