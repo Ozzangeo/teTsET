@@ -46,7 +46,7 @@ void Sprite::Update() {
 		(int)(object->Pos.x - (object->Size.x * 0.5f)),
 		(int)(object->Pos.y - (object->Size.y * 0.5f)),
 		(int)object->Pos.z },
-		object->Size);
+	  { (int)object->Size.x, (int)object->Size.y });
 	}
 }
 
@@ -57,7 +57,7 @@ void Sprite2D::Update() {
 		(int)(object->Pos.x - (object->Size.x * 0.5f)),
 		(int)(object->Pos.y - (object->Size.y * 0.5f)),
 		(int) object->Pos.z},
-		object->Size);
+	  { (int)object->Size.x, (int)object->Size.y });
 	}
 }
 
@@ -98,3 +98,10 @@ void Audio::RePlayAudio(UINT ID) {
 void Audio::PauseAudio(UINT ID) {
 	mciSendCommand(ID, MCI_PAUSE, MCI_NOTIFY, (DWORD)(LPVOID)&mciPlay);
 }
+
+// Collider
+
+//void Collider::Awake()
+//{
+//	Scene_ = SceneManager::GetInstance().UpdateScene;
+//}

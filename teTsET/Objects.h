@@ -19,6 +19,7 @@ namespace Objects {
 	public:
 		void Awake();
 	};
+
 	class Player : public GameObject {
 	private:
 	public:
