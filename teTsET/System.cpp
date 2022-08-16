@@ -73,7 +73,7 @@ void Graphic::Draw() {
 	// 최대 프레임 : cout(730 fps), printf(680 fps)
 	// 최소 프레임 : cout(540 fps), printf(600 fps)
 	// 안정성 면에서 printf 사용
-
+	
 	printf("%s", TLayer);
 	// cout << TLayer;
 
