@@ -15,11 +15,11 @@ protected:
 
 public:
 	bool isActivate;
-	GameObject* Object;
+	GameObject* object;
 
 	Component();
 
-	virtual void Awake() = 0;
+	virtual void Awake() {};
 	virtual void Update() = 0;
 	virtual void Remove() {};
 };

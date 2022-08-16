@@ -43,16 +43,9 @@ int main() {
 #pragma region Scenes
 #pragma region Scene1
 	Scene NewScene;
-	
-	for (int i = 0; i < 50; i++) {
-		Sprite2DTest* so = NewScene.AddGameObject<Sprite2DTest>("Audio" + to_string(i));
-		so->Pos = { (float)(i * 2), (float)i, 0};
-	}
 
-	for (int i = 50; i > 0; i--) {
-		Sprite2DTest* so = NewScene.AddGameObject<Sprite2DTest>("Audio" + to_string(i + 50));
-		so->Pos = { (float)(i * 2), (float)50 - i, 0 };
-	}
+	Player* pl = NewScene.AddGameObject<Player>("Player");
+	pl->Pos = { 50, 25 };
 
 	manager->AddScene(&NewScene, "NewScene");
 #pragma endregion

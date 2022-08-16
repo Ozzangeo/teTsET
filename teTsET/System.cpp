@@ -106,7 +106,10 @@ void Graphic::TextBox(const char* text, Vector3<int> Pos, Vector2<int> Box) {
 	int i = 0;
 
 	for (int y = 0; y < Box.y && Pos.y + y < HEIGHT; y++) {
-		if (Pos.y + y < 0) continue;
+		if (Pos.y + y < 0) {
+			i += Box.x;
+			continue;
+		}
 		for (int x = 0; x < Box.x; x++) {
 			// 만약 text길이 넘으면 for문 종료
 			if (i >= (int)strlen(text)) return;

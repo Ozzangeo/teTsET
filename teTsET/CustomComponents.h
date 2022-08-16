@@ -81,9 +81,8 @@ public:
 namespace CCs {
 	class CrossTestComp : public Component {
 	public:
-		float speed = 10.0f;
+		float speed = 50.0f;
 
-		void Awake() {};
 		void Update();
 	};
 	class AudioTestComp : public Component {
@@ -92,6 +91,12 @@ namespace CCs {
 
 	public:
 		void Awake();
+		void Update();
+	};
+	class PlayerComp : public Component {
+	private:
+		float PlayerSpeed = 20.0f;
+	public:
 		void Update();
 	};
 }

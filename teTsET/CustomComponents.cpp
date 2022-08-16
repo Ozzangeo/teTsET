@@ -52,8 +52,8 @@ void SceneManager::Clear() {
 void CrossTestComp::Update() {
 	static bool isVis = true;
 
-	if (Object->Pos.y + (Object->Size.y * 0.5f) >= HEIGHT) {
-		Object->Pos.y -= HEIGHT;
+	if (object->Pos.y + (object->Size.y * 0.5f) >= HEIGHT) {
+		object->Pos.y -= HEIGHT;
 	}
 
 	static bool isPlaySound = false;
@@ -65,15 +65,15 @@ void CrossTestComp::Update() {
 	}
 	else isPlaySound = false;
 
-	if (isVis) Object->isVisible = true;
-	else Object->isVisible = false;
+	if (isVis) object->isVisible = true;
+	else object->isVisible = false;
 
-	Object->Pos.y += graphic->deltatime * speed;
+	object->Pos.y += graphic->deltatime * speed;
 }
 
 // AudioTestComp
 void AudioTestComp::Awake() {
-	audio = Object->CompHolder.RequireComponent<Audio>();
+	audio = object->CompHolder.RequireComponent<Audio>();
 
 	audio->LoadAudio("Music\\BGM.mp3");
 	audio->LoadAudio("SoundEffect\\BBong.mp3");
@@ -91,3 +91,19 @@ void AudioTestComp::Update() {
 	else isPlaySound = false;
 }
 
+// PlayerComp
+void PlayerComp::Update()
+{
+	if (keyboard->GetKey(KC_W)) {
+		object->Pos.y -= PlayerSpeed * graphic->deltatime;
+	}
+	if (keyboard->GetKey(KC_A)) {
+		object->Pos.x -= PlayerSpeed * graphic->deltatime * 2;
+	}
+	if (keyboard->GetKey(KC_S)) {
+		object->Pos.y += PlayerSpeed * graphic->deltatime;
+	}
+	if (keyboard->GetKey(KC_D)) {
+		object->Pos.x += PlayerSpeed * graphic->deltatime * 2;
+	}
+}

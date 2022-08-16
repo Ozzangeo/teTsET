@@ -9,7 +9,7 @@ Component::Component() {
 	this->isActivate = true;
 	this->graphic = &Graphic::GetInstance();
 	this->keyboard = &Keyboard::GetInstance();
-	this->Object = nullptr;
+	this->object = nullptr;
 }
 
 // ComponentHolder
@@ -41,23 +41,23 @@ void GameObject::Remove() {
 
 // Sprite
 void Sprite::Update() {
-	if (Object->isVisible) {
+	if (object->isVisible) {
 		graphic->Fill(sprite, {
-		(int)(Object->Pos.x - (Object->Size.x * 0.5f)),
-		(int)(Object->Pos.y - (Object->Size.y * 0.5f)),
-		(int)Object->Pos.z },
-		Object->Size);
+		(int)(object->Pos.x - (object->Size.x * 0.5f)),
+		(int)(object->Pos.y - (object->Size.y * 0.5f)),
+		(int)object->Pos.z },
+		object->Size);
 	}
 }
 
 // Sprite2D
 void Sprite2D::Update() {
-	if (Object->isVisible) {
+	if (object->isVisible) {
 		graphic->TextBox(sprite.c_str(), {
-		(int)(Object->Pos.x - (Object->Size.x * 0.5f)),
-		(int)(Object->Pos.y - (Object->Size.y * 0.5f)),
-		(int) Object->Pos.z},
-		Object->Size);
+		(int)(object->Pos.x - (object->Size.x * 0.5f)),
+		(int)(object->Pos.y - (object->Size.y * 0.5f)),
+		(int) object->Pos.z},
+		object->Size);
 	}
 }
 
