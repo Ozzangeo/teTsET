@@ -53,25 +53,21 @@ void PlayerComp::Awake() {
 }
 void PlayerComp::Update()
 {
-	isCollision = Col->isCollision("Wall");
-
-	Vector3<float> Before = object->Pos;
-
 	if (keyboard->GetKey(KC_W)) {
 		object->Pos.y -= PlayerSpeed * graphic->deltatime;
-		if (isCollision) object->Pos = Before;
+		if (Col->isCollision("Wall")) object->Pos.y += PlayerSpeed * graphic->deltatime;
 	}
 	if (keyboard->GetKey(KC_A)) {
 		object->Pos.x -= PlayerSpeed * graphic->deltatime * 2;
-		if (isCollision) object->Pos = Before;
+		if (Col->isCollision("Wall")) object->Pos.x += PlayerSpeed * graphic->deltatime * 2;
 	}
 	if (keyboard->GetKey(KC_S)) {
 		object->Pos.y += PlayerSpeed * graphic->deltatime;
-		if (isCollision) object->Pos = Before;
+		if (Col->isCollision("Wall")) object->Pos.y -= PlayerSpeed * graphic->deltatime;
 	}
 	if (keyboard->GetKey(KC_D)) {
 		object->Pos.x += PlayerSpeed * graphic->deltatime * 2;
-		if (isCollision) object->Pos = Before;
+		if (Col->isCollision("Wall")) object->Pos.x -= PlayerSpeed * graphic->deltatime * 2;
 	}
 
 	graphic->Text("[ isCollision : " + to_string(isCollision) + " ] ", {1, 9}, true);

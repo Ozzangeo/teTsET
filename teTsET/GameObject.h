@@ -206,25 +206,6 @@ namespace DCs {
 		void Awake();
 		void Update() {};
 
-		bool isCollision(string tag) {
-			list<GameObject*> objects = SceneManager_->UpdateScene->GetGameObjectList(tag);
-
-			if (object == nullptr) return false;
-
-			// Pos < Pos + Size
-			// <= : 널널한 판정
-			// < : 빡센 판정
-			for (auto Item : objects) {
-				for (int x = (int)object->Pos.x, X = (int)(object->Pos.x + object->Size.x); x < X; x++) {
-				for (int y = (int)object->Pos.y, Y = (int)(object->Pos.y + object->Size.y); y < Y; y++) {
-					for (int x_ = (int)Item->Pos.x, X_ = (int)(Item->Pos.x + Item->Size.x); x_ < X_; x_++) {
-					for (int y_ = (int)Item->Pos.y, Y_ = (int)(Item->Pos.y + Item->Size.y); y_ < Y_; y_++) {
-						if (x == x_ && y == y_) return true;
-					}}
-				}}
-			}
-
-			return false;
-		}
+		bool isCollision(string tag);
 	};
 }

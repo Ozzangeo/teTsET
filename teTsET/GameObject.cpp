@@ -75,10 +75,10 @@ SceneManager& SceneManager::GetInstance() {
 }
 void SceneManager::AddScene(Scene* Scene_, string Tag) {
 	for (auto& Item : Scenes) {
-		if (Item.Tag == Tag) {
-			Item.Scene_ = Scene_;
-			return;
-		}
+if (Item.Tag == Tag) {
+	Item.Scene_ = Scene_;
+	return;
+}
 	}
 	Scenes.push_back({ Scene_, Tag });
 }
@@ -105,7 +105,7 @@ void Sprite::Update() {
 		(int)(object->Pos.x - (object->Size.x * 0.5f)),
 		(int)(object->Pos.y - (object->Size.y * 0.5f)),
 		(int)object->Pos.z },
-	  { (int)object->Size.x, (int)object->Size.y });
+			{ (int)object->Size.x, (int)object->Size.y });
 	}
 }
 
@@ -115,8 +115,8 @@ void Sprite2D::Update() {
 		graphic->TextBox(sprite.c_str(), {
 		(int)(object->Pos.x - (object->Size.x * 0.5f)),
 		(int)(object->Pos.y - (object->Size.y * 0.5f)),
-		(int) object->Pos.z},
-	  { (int)object->Size.x, (int)object->Size.y });
+		(int)object->Pos.z },
+			{ (int)object->Size.x, (int)object->Size.y });
 	}
 }
 
@@ -162,4 +162,25 @@ void Audio::PauseAudio(UINT ID) {
 void Collider::Awake()
 {
 	SceneManager_ = &SceneManager::GetInstance();
+}
+bool Collider::isCollision(string tag)
+{
+	{
+		list<GameObject*> objects = SceneManager_->UpdateScene->GetGameObjectList(tag);
+
+		if (object == nullptr) return false;
+
+		// Pos < Pos + Size
+		for (GameObject* Item : objects) {
+			if (object->Pos.x + (object->Size.x * 0.5) >= Item->Pos.x - (Item->Size.x * 0.5) &&
+				object->Pos.x - (object->Size.x * 0.5) <= Item->Pos.x + (Item->Size.x * 0.5)) {
+				if (object->Pos.y + (object->Size.y * 0.5) >= Item->Pos.y - (Item->Size.y * 0.5) &&
+				    object->Pos.y - (object->Size.y * 0.5) <= Item->Pos.y + (Item->Size.y * 0.5)) {
+					return true;
+				}
+			}
+		}
+
+		return false;
+	}
 }

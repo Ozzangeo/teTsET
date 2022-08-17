@@ -53,7 +53,10 @@ int main() {
 	pl->Pos = { 50, 0 };
 
 	pl = NewScene.AddGameObject<ColliderObj>("TestObject");
-	pl->Pos = { 50, 25 };
+	pl->Pos = { 25, 25 };
+
+	pl = NewScene.AddGameObject<ColliderObj>("TestObject2");
+	pl->Pos = { 75, 24 };
 
 	manager->AddScene(&NewScene, "NewScene");
 #pragma endregion

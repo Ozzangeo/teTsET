@@ -52,7 +52,7 @@ void Player::Awake()
 	CompHolder.Awake();
 
 	Sprite* sp = CompHolder.GetComponent<Sprite>();
-	sp->object->Size = { 10, 5 };
+	sp->object->Size = { 11, 5 };
 }
 
 // ColliderObj
@@ -65,6 +65,7 @@ void ColliderObj::Awake() {
 	tag = "Wall";
 #pragma region Sprite
 	Sprite* sprite = CompHolder.GetComponent<Sprite>();
-	sprite->object->Size = { 10, 5 };
+	sprite->sprite = '#';
+	sprite->object->Size = { 9, 5 };
 #pragma endregion
 }
